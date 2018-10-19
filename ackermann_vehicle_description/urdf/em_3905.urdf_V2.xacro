@@ -40,7 +40,10 @@ limitations under the License.
 -->
 
 <robot name="em_3905" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <xacro:include filename="$(find ackermann_vehicle_description)/urdf/colors.xacro" />
   <!-- Degree-to-radian conversions -->
+  
   <xacro:property name="degrees_45" value="0.785398163"/>
   <xacro:property name="degrees_90" value="1.57079633"/>
 
@@ -115,15 +118,6 @@ limitations under the License.
   <xacro:property name="servo_stall_torque" value="1.5649"/>
   <xacro:property name="servo_no_load_speed" value="4.5530"/>
 
-  <material name="battery_mat">
-    <color rgba="0 0 1 1"/>
-  </material>
-  <material name="chassis_mat">
-    <color rgba="0.5 0.5 0.5 1"/>
-  </material>
-  <material name="tire_mat">
-    <color rgba="0 0 0 1"/>
-  </material>
 
   <!-- Null inertial element. This is needed to make the model work with
        Gazebo. -->
