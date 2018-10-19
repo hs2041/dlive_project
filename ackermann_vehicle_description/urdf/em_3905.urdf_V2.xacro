@@ -2,7 +2,7 @@
 
 <!-- MADE SOME CHANGES IN THE DIMENSIONS and MASS
 WHEEL MASS IS CORRECT, REST IS NOT -->
-<!-- Also added a camera and broke the materials to a different file -->
+<!-- rEMOVED THE BATTERIES -->
 
 <!-- em_3905.urdf.xacro
 
@@ -44,11 +44,7 @@ limitations under the License.
 <robot name="em_3905" xmlns:xacro="http://www.ros.org/wiki/xacro">
   
   <xacro:include filename="$(find ackermann_vehicle_description)/urdf/colors.xacro" />
-  <xacro:include filename="$(find ackermann_vehicle_description)/urdf/sensors.gazebo" />
   
-  
-  <xacro:property name="cameraSize" value="0.05"/>
-  <xacro:property name="cameraMass" value="0.1"/>
   <!-- Degree-to-radian conversions -->
   
   <xacro:property name="degrees_45" value="0.785398163"/>
@@ -169,6 +165,8 @@ limitations under the License.
   </xacro:macro>
 
   <!-- Battery -->
+
+<!--
   <xacro:macro name="battery" params="prefix reflect">
     <joint name="chassis_to_${prefix}_battery" type="fixed">
       <parent link="chassis"/>
@@ -216,7 +214,8 @@ limitations under the License.
       <material>Gazebo/Blue</material>
     </gazebo>
   </xacro:macro>
-
+  
+-->
   <!-- Shock absorber -->
   <xacro:macro name="shock"
                params="lr_prefix fr_prefix lr_reflect fr_reflect child">
@@ -396,9 +395,12 @@ limitations under the License.
     <child link="chassis"/>
   </joint>
 
+
   <!-- Batteries -->
+  <!--
   <xacro:battery prefix="left" reflect="1"/>
   <xacro:battery prefix="right" reflect="-1"/>
+  -->  
 
   <!-- Wheels -->
   <xacro:front_wheel lr_prefix="left" fr_prefix="front"
@@ -410,37 +412,6 @@ limitations under the License.
   <xacro:rear_wheel lr_prefix="right" fr_prefix="rear"
                     lr_reflect="-1" fr_reflect="-1"/>
   
-  <link name="camera">
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="${cameraSize} ${cameraSize} ${cameraSize}"/>
-      </geometry>
-    </collision>
-
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="${cameraSize} ${cameraSize} ${cameraSize}"/>
-      </geometry>
-      <material name="green"/>
-    </visual>
-
-    <inertial>
-      <mass value="${cameraMass}" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <box_inertia m="${cameraMass}" x="${cameraSize}" y="${cameraSize}" z="${cameraSize}" />
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>
-
-  <joint name="camera_joint" type="fixed">
-    <axis xyz="0 1 0" />
-    <origin xyz=".2 0 1" rpy="0 0 0"/>
-    <parent link="chassis"/>
-    <child link="camera"/>
-  </joint>
-
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
   </gazebo>

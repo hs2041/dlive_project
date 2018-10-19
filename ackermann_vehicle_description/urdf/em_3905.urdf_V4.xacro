@@ -2,7 +2,7 @@
 
 <!-- MADE SOME CHANGES IN THE DIMENSIONS and MASS
 WHEEL MASS IS CORRECT, REST IS NOT -->
-<!-- Also added a camera, imu and broke the materials to a different file -->
+<!-- Also added a camera, imu, removed the batteries and broke the materials to a different file -->
 
 <!-- em_3905.urdf.xacro
 
@@ -166,55 +166,6 @@ limitations under the License.
                izz="${mass * (inner_rad * inner_rad +
                     outer_rad * outer_rad) / 2}"/>
     </inertial>
-  </xacro:macro>
-
-  <!-- Battery -->
-  <xacro:macro name="battery" params="prefix reflect">
-    <joint name="chassis_to_${prefix}_battery" type="fixed">
-      <parent link="chassis"/>
-      <child link="${prefix}_battery_offset"/>
-      <origin xyz="${battery_x_offset - battery_length / 2}
-                   ${reflect * battery_dist / 2}
-                   0"
-              rpy="${reflect * battery_comp_angle} 0 0"/>
-    </joint>
-
-    <link name="${prefix}_battery_offset">
-      <xacro:null_inertial/>
-    </link>
-
-    <joint name="offset_to_${prefix}_battery" type="fixed">
-      <parent link="${prefix}_battery_offset"/>
-      <child link="${prefix}_battery"/>
-      <origin xyz="0
-                   ${reflect * battery_width / 2}
-                   ${(battery_height / 2) - battery_comp_depth}"/>
-    </joint>
-
-    <link name="${prefix}_battery">
-      <visual>
-        <geometry>
-          <box size="${battery_length} ${battery_width} ${battery_height}"/>
-        </geometry>
-        <material name="battery_mat"/>
-      </visual>
-
-      <collision>
-        <geometry>
-          <box size="${battery_length} ${battery_width} ${battery_height}"/>
-        </geometry>
-      </collision>
-
-      <xacro:solid_cuboid_inertial
-         width="${battery_length}" depth="${battery_width}"
-         height="${battery_height}" mass="${battery_mass}">
-        <origin/>
-      </xacro:solid_cuboid_inertial>
-    </link>
-
-    <gazebo reference="${prefix}_battery">
-      <material>Gazebo/Blue</material>
-    </gazebo>
   </xacro:macro>
 
   <!-- Shock absorber -->
@@ -395,10 +346,6 @@ limitations under the License.
     <parent link="base_link"/>
     <child link="chassis"/>
   </joint>
-
-  <!-- Batteries -->
-  <xacro:battery prefix="left" reflect="1"/>
-  <xacro:battery prefix="right" reflect="-1"/>
 
   <!-- Wheels -->
   <xacro:front_wheel lr_prefix="left" fr_prefix="front"
