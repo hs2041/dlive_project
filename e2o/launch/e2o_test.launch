@@ -1,0 +1,5 @@
+<launch>
+  <node name="joy_node" pkg="joy" type="joy_node" />
+  <node name="logitech_e2o_ctrl" pkg="e2o" type="logitech_e2o_ctrl.py"/>
+  <node name="e2o_ctrl" pkg="e2o" type="pcan_e2o_drv.py" output="screen" />
+</launch>

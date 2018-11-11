@@ -1,0 +1,4 @@
+<launch>
+  <node name="ros_udpnode" pkg="e2o" type="udp_subscribe.py"/>
+  <node name="e2o_ctrl" pkg="e2o" type="pcan_e2o_drv.py" output="screen" />
+</launch>

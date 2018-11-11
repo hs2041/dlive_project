@@ -1,0 +1,5 @@
+<launch>
+	<include file="$(find pepperl_fuchs_r2000)/launch/r2000_update.launch" />
+	<node name="r2000_update" pkg="e2o" type="r2000_update.py"/>
+	<node name="obstacle_r2000" pkg="e2o" type="check_obstacle.py"/>
+</launch>
