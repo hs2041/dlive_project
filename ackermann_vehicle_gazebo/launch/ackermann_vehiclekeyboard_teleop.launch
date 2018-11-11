@@ -72,12 +72,10 @@ limitations under the License.
     
 
     <!-- keyboard controller -->	
-    <!--
     <node name="keyboard_input" pkg="ackermann_vehicle_gazebo" type="keyboard_input.py"/>
-    -->
-    <!--
+    
     <node name="teleop_gazebo" pkg="test_scripts" type="teleop_gazebo.py"/>
-    -->
+    
     <!-- Control the steering, axle, and shock absorber joints. -->
     <node name="ackermann_controller" pkg="ackermann_vehicle_gazebo"
           type="ackermann_controller.py">

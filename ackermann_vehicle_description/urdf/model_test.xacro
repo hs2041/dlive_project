@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
-<!-- em_3905.urdf.xacro
-
+<!-- em_3905.urdf.xacro -->
+<!-- ADDED THE CAR MODEL 
 This file defines a model of a Traxxas(R) E-Maxx(R) #3905 RC (Radio Controlled)
 truck.
 
@@ -40,6 +40,7 @@ limitations under the License.
   
   <xacro:include filename="$(find ackermann_vehicle_description)/urdf/colors.xacro" />
   <xacro:include filename="$(find ackermann_vehicle_description)/urdf/sensors.gazebo" />
+  <xacro:include filename="$(find ackermann_vehicle_description)/urdf/e2o_without_tires.dae" />
   <xacro:property name="cameraSize" value="0.05"/>
   <xacro:property name="cameraMass" value="0.1"/>
   
@@ -49,8 +50,8 @@ limitations under the License.
 
   <!-- chassis_length is measured along the x axis, chassis_width
        along the y axis, and chassis_height along the z axis. -->
-  <xacro:property name="chassis_length" value="0.258"/>
-  <xacro:property name="chassis_width" value="0.168"/>
+  <xacro:property name="chassis_length" value="2.8"/> <!-- SET -->
+  <xacro:property name="chassis_width" value="1.2"/> <!-- SET -->
   <xacro:property name="chassis_height" value="0.01"/>
   <xacro:property name="chassis_mass" value="2.788"/>
 
@@ -60,21 +61,21 @@ limitations under the License.
        inset from the outer edge of the tire. It is set so that each wheel
        is a "zero offset" wheel. hex_hub_depth = tire_width / 2 -
        axle_length. -->
-  <xacro:property name="hub_dia" value="0.09652"/>
-  <xacro:property name="tire_dia" value="0.14605"/>
+  <xacro:property name="hub_dia" value="0.09652"/> 
+  <xacro:property name="tire_dia" value="0.5"/> <!-- SET -->
   <xacro:property name="tire_width" value="0.0889"/>
   <xacro:property name="hex_hub_depth" value="0.01445"/>
-  <xacro:property name="wheel_mass" value="0.29"/>
+  <xacro:property name="wheel_mass" value="8.0"/>
 
   <!-- hex_hub_dist is the distance between left and right hex hubs when
        the shock absorbers are fully extended. axle_length is the distance
        from a U joint to the corresponding hex hub. wheel_travel is the
        vertical wheel travel. -->
-  <xacro:property name="wheelbase" value="0.335"/>
-  <xacro:property name="hex_hub_dist" value="0.365"/>
+  <xacro:property name="wheelbase" value="1.958"/>  <!-- SET -->
+  <xacro:property name="hex_hub_dist" value="1.20"/>
   <xacro:property name="axle_length" value="0.03"/>
   <xacro:property name="wheel_travel" value="0.084"/>
-  <xacro:property name="shock_z_offset" value="0.0655"/>
+  <xacro:property name="shock_z_offset" value="0.25"/> <!-- SET -->
 
   <!-- shock_eff_limit is 2 * ((shock_stroke / 2) * shock_spring_constant) N.
        shock_stroke is 0.028575 meters. shock_spring_constant, an approximation
@@ -103,7 +104,7 @@ limitations under the License.
   <!-- These constants are used to simulate a Traxxas 2056 servo operated at
        6 V. servo_stall_torque is measured in N m. servo_no_load_speed is
        measured in rad/s. -->
-  <xacro:property name="servo_stall_torque" value="0.5649"/>
+  <xacro:property name="servo_stall_torque" value="1.5649"/>
   <xacro:property name="servo_no_load_speed" value="4.553"/>
 
   
@@ -434,7 +435,23 @@ limitations under the License.
     <child link="imu_link"/>
   </joint>
 
+  
+  <link name="car_model">
+        <visual name="visual">
+          <geometry>
+            <mesh filename="$(find ackermann_vehicle_description)/urdf/e2o_without_tires.dae"/>
+<!--	    <mesh><uri>file://e2o_without_tires.dae</uri></mesh> -->
+          </geometry>
+        </visual>
+  </link>
+  <joint name="car_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="1.5 0.95 -0.5" rpy="0 0 0"/>
+    <parent link="chassis"/>
+    <child link="car_model"/>
+  </joint>
 
+  
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
   </gazebo>

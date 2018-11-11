@@ -11,9 +11,6 @@ key_mapping = { 'w': [ 0, 1], 'x': [0, -1],
 's': [ 0, 0] }
 
 def keys_cb(msg, twist_pub):
-	
-	global t 
-
 	if len(msg.data) == 0 or not key_mapping.has_key(msg.data[0]):
 		return # unknown key
 	vels = key_mapping[msg.data[0]]
